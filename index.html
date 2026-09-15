@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>National Certificate Verification</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#fff;color:#222}
+.top{min-height:62px;background:linear-gradient(#eef7ff,#cfe9fb);border-bottom:1px solid #6da7d0;display:flex;align-items:center;padding:0 18px;gap:10px}
+.logo{width:38px;height:38px;object-fit:contain;background:#fff;border:1px solid #9dbbd0;border-radius:50%;padding:3px}
+.brand{font-size:20px;font-weight:700;color:#174f7b}
+.top-links{margin-left:auto;display:flex;align-items:center;gap:4px;flex-wrap:wrap;justify-content:flex-end}
+.top-links a{text-decoration:none;background:#fff;color:#174f7b;border:1px solid #8bb6d2;padding:5px 8px;border-radius:3px;font-size:11px;font-weight:700;white-space:nowrap}
+.top-links a:hover{background:#e8f5ff}
+.top-links .icon{margin-right:3px;font-size:11px}
+.nav{background:linear-gradient(#69b6e7,#1975b4);padding:5px 12px;display:flex;gap:6px;flex-wrap:wrap}
+.nav span{background:#2d88bd;color:white;border:1px solid #8bc8ea;padding:5px 10px;font-size:11px}
+.wrap{max-width:1000px;margin:18px auto;padding:0 12px}
+h1{font-size:22px;color:#174f7b;margin:0 0 12px}
+.panel{border:2px solid #74a9d0;box-shadow:0 0 0 1px #d5e7f4 inset;margin-bottom:16px}
+.panel-title{background:linear-gradient(#8fd0f4,#42a3da);color:#123e5c;font-weight:700;padding:8px 10px;border-bottom:1px solid #4b91bd}
+.form{padding:12px;background:#f8fcff}
+.row{display:grid;grid-template-columns:180px 1fr;gap:10px;align-items:center;margin:7px 0}
+label{font-weight:700;font-size:13px}
+input,select{width:100%;padding:8px;border:1px solid #9dbbd0;border-radius:2px;background:#fff}
+button{background:#2387c2;color:#fff;border:1px solid #126796;padding:7px 18px;border-radius:2px;font-weight:700;cursor:pointer}
+button:hover{background:#176da0}
+.result{display:none}
+
+/* Marksheet */
+.marksheet{background:#fff;border:1px solid #777;padding:18px;max-width:960px;margin:auto;color:#111}
+.ms-head{text-align:center;font-weight:700;line-height:1.35}
+.ms-head .big{font-size:18px}
+.ms-head .title{font-size:16px;margin-top:8px}
+.ms-meta{display:flex;justify-content:space-between;font-weight:700;font-size:13px;margin:16px 0 8px}
+.photo-wrap{width:125px;margin:5px 0 12px}
+.photo-wrap img{width:125px;height:150px;object-fit:cover;border:1px solid #555;padding:2px;display:block}
+.ms-fields{font-size:13px;line-height:1.7}
+.field-line{display:flex;gap:5px;margin:2px 0}
+.field-label{font-weight:700;white-space:nowrap}
+.dots{border-bottom:1px dotted #444;flex:1;min-width:20px}
+.marks-table{width:100%;border-collapse:collapse;margin-top:12px;font-size:11px;text-align:center}
+.marks-table th,.marks-table td{border:1px solid #444;padding:5px 3px}
+.marks-table th{font-weight:700}
+.marks-table .left{text-align:left}
+.result-line{margin-top:12px;font-size:13px;font-weight:700}
+.ms-bottom{display:flex;justify-content:space-between;margin-top:35px;font-size:12px}
+.ms-notes{font-size:10px;line-height:1.45;margin-top:25px}
+.print-btn{margin:10px 0;text-align:right}
+
+.student-existing{margin-top:15px;border-top:1px solid #c9dce8;padding-top:12px}
+.grid{display:grid;grid-template-columns:180px 1fr;gap:0;border:1px solid #c2d6e4}
+.cell{padding:8px 10px;border-bottom:1px solid #d6e3ec;font-size:13px}
+.key{font-weight:700;background:#eef7fc}
+.cell:nth-last-child(-n+2){border-bottom:0}
+
+footer{margin-top:40px;background:#e6f4ff;border-top:1px solid #75b1d9;padding:10px;text-align:center;font-size:11px;color:#42677f}
+
+@media(max-width:750px){
+.top{min-height:auto;padding:10px;flex-wrap:wrap}.logo{width:34px;height:34px}.brand{font-size:16px}
+.top-links{width:100%;margin-left:44px;justify-content:flex-start}
+}
+@media(max-width:600px){
+.row{grid-template-columns:1fr;gap:4px}.grid{grid-template-columns:1fr}.top-links{margin-left:0;justify-content:center}.nav{justify-content:center}
+.marksheet{padding:8px;overflow-x:auto}.ms-meta{flex-direction:column;gap:5px}
+.marks-table{font-size:9px;min-width:760px}.ms-fields{font-size:11px}.field-line{display:block}
+.photo-wrap{margin-left:auto;margin-right:auto}
+.ms-bottom{flex-direction:column;gap:25px}
+}
+@media print{
+.top,.nav,.panel:first-of-type,h1,footer,.print-btn{display:none!important}
+.wrap{max-width:none;margin:0;padding:0}
+.panel{border:0;box-shadow:none}
+.result{display:block!important}
+.marksheet{border:0}
+}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <img class="logo" src="logo.png" alt="Logo">
+  <div class="brand">Ministry of Skill Development And Entrepreneurship</div>
+  <div class="top-links">
+    <a href="#" onclick="showMessage('Support');return false">☎ Support</a>
+    <a href="#" onclick="showMessage('Login');return false">🔐 Login</a>
+    <a href="#" onclick="showMessage('FAQ');return false">? FAQ</a>
+    <a href="#" onclick="showMessage('Help');return false">❔ Help</a>
+    <a href="#" onclick="showMessage('SiteMap');return false">☰ SiteMap</a>
+  </div>
+</div>
+
+<div class="nav">
+  <span>Home</span><span>ITI</span><span>Trainee</span><span>Verification</span>
+  <span>instruductor</span><span>Examiner</span><span>Calendar</span><span>CFI</span>
+  <span>Help</span><span>Dashboard</span><span>Complaint Tool</span>
+</div>
+
+<main class="wrap">
+<h1>e-Certificate Verification</h1>
+
+<section class="panel">
+  <div class="panel-title">Enter Certificate Number</div>
+  <div class="form">
+    <div class="row">
+      <label for="cert">Roll Number/Registration Number</label>
+      <input id="cert" value="R210805098904">
+    </div>
+    <div class="row">
+      <label for="examType">Exam Type</label>
+      <select id="examType"><option>Annual</option><option>Semester</option></select>
+    </div>
+    <div class="row">
+      <label for="semester">Semester</label>
+      <select id="semester"><option>All</option><option>1</option><option>2</option><option>3</option><option>4</option></select>
+    </div>
+    <div style="text-align:right">
+      <button onclick="verify()">Verify</button>
+    </div>
+  </div>
+</section>
+
+<section class="panel result" id="result">
+<div class="panel-title">Certificate Holder Information</div>
+<div class="form">
+
+<div class="marksheet">
+  <div class="ms-head">
+    <div class="big">CONSOLIDATED STATEMENT OF MARKS FOR AITT CONDUCTED BY D.G.T</div>
+    <div>Directorate General of Training (DGT)*</div>
+    <div>Craftsmen Training Scheme (CTS)</div>
+    <div>Academic Season – Aug 2021</div>
+    <div>All Year (CTS Annual System) – Engineering Trades</div>
+  </div>
+
+  <div class="ms-meta">
+    <div>Reg No.: R210805098904</div>
+    <div>Roll No.: 00210805098904</div>
+  </div>
+
+  <!-- Student photo: replace student-photo.jpg with your own image file -->
+  <div class="photo-wrap">
+    <img src="student-photo.jpg" alt="Student Photo"
+      onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22125%22 height=%22150%22%3E%3Crect width=%22100%25%22 height=%22100%25%22 fill=%22%23eeeeee%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-size=%2212%22 fill=%22%23666666%22%3EStudent Photo%3C/text%3E%3C/svg%3E';">
+  </div>
+
+  <div class="ms-fields">
+    <div class="field-line"><span class="field-label">Name</span><span class="dots">SONU YADAV</span><span class="field-label">Date of Birth</span><span class="dots">06-March-2006</span></div>
+    <div class="field-line"><span class="field-label">Father/Guardian Name</span><span class="dots">BAIJNATH YADAV</span><span class="field-label">Exam Month - Year</span><span class="dots">Aug 2023</span></div>
+    <div class="field-line"><span class="field-label">Trade Name</span><span class="dots">Electrician (NSQF)</span></div>
+    <div class="field-line"><span class="field-label">ITI Name &amp; Address</span><span class="dots">PR09001367 - Late Bhabhuti Audyogik Prashikshan Kendra - Maharajganj, Nichlaul, Maharajganj, Uttar Pradesh</span></div>
+  </div>
+
+  <table class="marks-table">
+    <thead>
+      <tr>
+        <th rowspan="2">S.No.</th><th rowspan="2">Year</th>
+        <th colspan="2">Trade Theory</th>
+        <th colspan="2">Employability Skills</th>
+        <th colspan="2">Trade Practical</th>
+        <th colspan="2">Formative Assessment</th>
+        <th colspan="2">Total</th>
+      </tr>
+      <tr>
+        <th>Max Marks</th><th>Marks Secured</th>
+        <th>Max Marks</th><th>Marks Secured</th>
+        <th>Max Marks</th><th>Marks Secured</th>
+        <th>Max Marks</th><th>Marks Secured</th>
+        <th>Max Marks</th><th>Marks Secured</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td>Year-1**</td><td>100</td><td>80</td><td>50</td><td>44</td><td>250</td><td>245</td><td>200</td><td>198</td><td>600</td><td>567</td></tr>
+      <tr><td>2</td><td>Year-2**</td><td>100</td><td>88</td><td>50</td><td>40</td><td>250</td><td>246</td><td>200</td><td>198</td><td>600</td><td>572</td></tr>
+      <tr><td colspan="2"><b>Total</b></td><td>200</td><td>168</td><td>100</td><td>84</td><td>500</td><td>491</td><td>400</td><td>396</td><td>1200</td><td><b>1139</b></td></tr>
+    </tbody>
+  </table>
+
+  <div class="result-line">RESULT DATE : 19-Aug-2023 &nbsp;&nbsp;&nbsp; RESULT : <span>PASS</span></div>
+
+  <div class="ms-bottom">
+    <div>New Delhi<br><br>Date of Printing: __________________</div>
+    <div style="text-align:center">Controller of Examination</div>
+  </div>
+
+  <div class="ms-notes">
+    <b>Note:</b> 1. Minimum pass mark for theoretical paper – 33%, for practical and formative assessment – 60%.<br>
+    *Directorate General of Training (DGT) is recognized as awarding body by NCVET.<br><br>
+    **Vide order no-MSDE(DGT)-19/03/(02)/2022-CD dated 5th April 2022, Trade Theory (Professional Knowledge) include Engineering Drawing and Workshop Calculation &amp; Science for Engineering Trade; and Workshop Calculation &amp; Science for Draughtman Group of Trades.<br><br>
+    This is a computer generated mark sheet and it does not require any physical signature or attestation.<br>
+    All content of this mark sheet can be verified for authenticity by the process of online verification through scanning the QR code printed above.<br>
+    The verification can also be done by visiting NCVTMIS Portal and entering the roll number.<br>
+    The DGT shall not be responsible for any direct or indirect financial losses, any loss of goodwill or reputation or any other loss or damage caused by any incorrect/fraudulent information in such computer generated certificate that cannot be validated by the NCVTMIS portal. DGT also reserves the right to take appropriate legal action in such cases.
+  </div>
+</div>
+
+<!-- Existing website student data retained below the marksheet -->
+<div class="student-existing">
+  <div class="panel-title">Student Information</div>
+  <div class="grid">
+    <div class="cell key">Trainee Name</div><div class="cell">SONU YADAV</div>
+    <div class="cell key">Father's Name</div><div class="cell">BAIJNATH YADAV</div>
+    <div class="cell key">Date of Birth</div><div class="cell">06-March-2006</div>
+    <div class="cell key">Institute</div><div class="cell">PR09001367 - Late Bhabhuti Audyogik Prashikshan Kendra - Maharajganj</div>
+    <div class="cell key">Institute Address</div><div class="cell">Nichlaul, Maharajganj, Uttar Pradesh</div>
+    <div class="cell key">District</div><div class="cell">Maharajganj</div>
+    <div class="cell key">State</div><div class="cell">UTTAR PRADESH</div>
+    <div class="cell key">Trade</div><div class="cell">Electrician (NSQF)</div>
+    <div class="cell key">NSQF Level</div><div class="cell">5</div>
+    <div class="cell key">Training Duration</div><div class="cell">2 year</div>
+    <div class="cell key">Admission Season</div><div class="cell">Aug 2021</div>
+    <div class="cell key">Examination Year</div><div class="cell">2023</div>
+    <div class="cell key">Certificate Issue Date</div><div class="cell">19-Aug-2023</div>
+    <div class="cell key">Certified</div><div class="cell">Yes</div>
+  </div>
+</div>
+
+<div class="print-btn">
+  <button onclick="window.print()">Print Marksheet</button>
+</div>
+
+</div>
+</section>
+</main>
+
+<footer>National Certificate Verification • Online Verification Portal</footer>
+
+<script>
+function verify(){
+  document.getElementById('result').style.display='block';
+  document.getElementById('result').scrollIntoView({behavior:'smooth'});
+}
+function showMessage(name){alert(name + " section");}
+</script>
+</body>
+</html>
